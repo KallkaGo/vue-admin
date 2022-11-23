@@ -72,7 +72,9 @@ class AxiosRequest {
     patch<T>(config: zhRequestconfig<T>): Promise<T> {
         return this.request<T>({ ...config, method: 'PATCH' })
     }
-
+    testCLick(){
+        console.log('this',this)
+    }
 
 
 

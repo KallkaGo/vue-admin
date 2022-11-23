@@ -10,13 +10,13 @@
             :label="item.label"
             :rules="item.rules"
             class="form-item"
-            v-if="item.isHide != true || ModifyType!=='EDIT' "
+            v-if="item.isHide !== true || ModifyType!=='EDIT' "
           >
             <template v-if="item.type === 'input' || item.type === 'password'">
               <el-input
                 :placeholder="item.placeholder"
                 :show-password="item.type === 'password'"
-                :modelValue="modelValue[`${item.field}`]"
+                :modelValue="modelValue[`${item.field}`] "
                 @update:modelValue="handleValueChange($event, item.field)"
               ></el-input>
             </template>
@@ -60,7 +60,7 @@ type Props = {
   formItems: Array<Fromitem>;
   labelwidth: string;
   colLayput?: Object;
-  modelValue: IformData;
+  modelValue: Object;
   "align-center"?: boolean;
   ModifyType?: string;
 };

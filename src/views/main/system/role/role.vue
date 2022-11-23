@@ -5,6 +5,7 @@
         <template #footer>
           <div class="footerbtn">
             <el-button type="primary" @click="handleSearch">搜索</el-button>
+            <el-button type="primary" @click="zhRequest.testCLick">{{ testCLick }}</el-button>
             <el-button @click="handleReset">重置</el-button>
           </div>
         </template>
@@ -12,31 +13,31 @@
     </div>
     <div class="page-content">
       <PageContent
-        ref="RefpageContent"
-        :tableconfig="Tableconfig"
-        PageName="role"
-        @edituser="handleEdit"
-        @adduser="handleAddUser"
+          ref="RefpageContent"
+          :tableconfig="Tableconfig"
+          PageName="role"
+          @edituser="handleEdit"
+          @adduser="handleAddUser"
       ></PageContent>
     </div>
     <Commondailog
-      height="417"
-      :otherInfo="otherInfo"
-      :dialogconfig="dialogconfig"
-      :showdialog="showdialog"
-      :dialogFormData="dialogFormData"
-      @canclehandle="CancleDialog"
-      PageName="role"
+        height="417"
+        :otherInfo="otherInfo"
+        :dialogconfig="dialogconfig"
+        :showdialog="showdialog"
+        :dialogFormData="dialogFormData"
+        @canclehandle="CancleDialog"
+        PageName="role"
     >
       <div class="menuTree">
         <el-tree
-          ref="treeRef"
-          :data="treeData"
-          show-checkbox
-          node-key="id"
-          highlight-current
-          :props="{ children: 'children', label: 'name' }"
-          @check="handleCheck"
+            ref="treeRef"
+            :data="treeData"
+            show-checkbox
+            node-key="id"
+            highlight-current
+            :props="{ children: 'children', label: 'name' }"
+            @check="handleCheck"
         />
       </div>
     </Commondailog>
@@ -44,14 +45,19 @@
 </template>
 
 <script setup lang="ts">
-import { dialogconfig } from "./dialogconfig/dialogconfig";
-import { Tableconfig, config } from "./config/roleconfig";
+import {dialogconfig} from "./dialogconfig/dialogconfig";
+import {Tableconfig, config} from "./config/roleconfig";
 import PageContent from "@/components/pageContent";
 import CmForm from "@/common-ui/form/src/form.vue";
-import { useStore } from "@/store";
-import { ElTree } from "element-plus";
-import { getMenucheck } from "@/utils/map-menus";
+import {useStore} from "@/store";
+import {ElTree} from "element-plus";
+import {getMenucheck} from "@/utils/map-menus";
+import zhRequest from "@/request/request";
+import {ComponentInternalInstance} from 'vue';
 
+const {testCLick} = zhRequest
+const a = getCurrentInstance() as ComponentInternalInstance
+console.log('proxy', a)
 const modiftType = ref("");
 provide("ModifyType", modiftType);
 
@@ -81,7 +87,7 @@ const treeRef = ref<InstanceType<typeof ElTree>>();
 const handleEdit = (data: any) => {
   const LeafKeys = getMenucheck([...data.menuList]);
   modiftType.value = "EDIT";
-  dialogFormData.value = { ...data };
+  dialogFormData.value = {...data};
   showdialog.value = true;
   nextTick(() => {
     treeRef.value?.setCheckedKeys(LeafKeys, false);
@@ -106,16 +112,17 @@ const handleReset = () => {
 };
 
 const handleSearch = () => {
-  let param = { ...formData.value };
+  let param = {...formData.value};
   RefpageContent.value?.GetTablelList(param);
+  console.log()
 };
 const handleCheck = (data1: any, data2: any) => {
   const checkedKeys = data2.checkedKeys;
   const halfCheckedKeys = data2.halfCheckedKeys;
-  console.log(data1,data2);
-  
+  console.log(data1, data2);
+
   const menuList = [...checkedKeys, ...halfCheckedKeys];
-  otherInfo.value = { menuList };
+  otherInfo.value = {menuList};
 };
 </script>
 
@@ -124,17 +131,21 @@ const handleCheck = (data1: any, data2: any) => {
   text-align: right;
   padding: 0 50px 20px 0;
 }
+
 .pagination {
   padding-top: 10px;
 }
+
 .page-content {
   padding: 20px;
   border-top: 20px solid #f5f5f5;
 }
+
 .addbtn {
   float: right;
   padding-bottom: 10px;
 }
+
 .menuTree {
   margin-left: 70px;
 }

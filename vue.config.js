@@ -3,6 +3,8 @@
 //   transpileDependencies: true
 // })
 const path = require("path");
+const Components = require('unplugin-vue-components/webpack')
+const { ElementPlusResolver } = require('unplugin-vue-components/resolvers')
 
 module.exports = {
   outputDir: "./build",
@@ -29,7 +31,11 @@ module.exports = {
       require("unplugin-auto-import/webpack")({
         imports: ["vue"],
         dts: "src/auto-import.d.ts",
+        resolvers: [ElementPlusResolver()],
         /* options */
+      }),
+      Components({
+        resolvers: [ElementPlusResolver()],
       }),
     ],
   },

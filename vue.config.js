@@ -12,7 +12,7 @@ module.exports = {
     proxy: {
       "/api": {
         //配置代理以“/api”
-        target: "http://152.136.185.210:5000", //目标主机
+        target: "http://codercba.com:5000", //目标主机
         ws: true, //代理的WebSockets
         changeOrigin: true, //需要虚拟主机站点
         pathRewrite: {
